@@ -3,7 +3,7 @@
     <ul>
         {% for album in all_album %}
         <li>
-            <a href="/music/{{ album.id }}/">
+            <a href="{% url 'music:details' album.id %}">
                 {{ album.album_title }}
             </a>
         </li>
