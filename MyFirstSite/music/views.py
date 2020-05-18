@@ -18,5 +18,7 @@ class CreateAlbum(CreateView):
     model = Album
     fields = ['artist','album_title','genre','album_logo']
 
-# class CreateFavorite(UpdateView):
+# class CreateFavoriteSong(UpdateView):
 #     model = Song
+#     fields = ['favorite']
+
