@@ -5,5 +5,5 @@ app_name = "music"
 urlpatterns = [
     path('',views.IndexView.as_view(),name='index'),
     path('<int:pk>/',views.DetailsView.as_view(),name='details'),
-    path('album/add/',views.CreateAlbum.as_view(),name='album-add'),
+    path('album/add/',views.CreateAlbum.as_view(),name='add-album'),
 ]

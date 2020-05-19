@@ -1,9 +1,9 @@
 {% extends 'music/base.html' %}
-
 {% block body %}
+
+<!--albums-->
 {% if all_album %}
     <section>
-    <h1 class="text-center ">Albums</h1>
         <div class="row container-fluid">
             {% for album in all_album %}
             <div class="col-sm-4 col-lg-4 col-12">
@@ -23,4 +23,7 @@
 {% else %}
      <h4>You don't have any album</h4>
 {% endif %}
+<!--end albums-->
+
+
 {% endblock %}

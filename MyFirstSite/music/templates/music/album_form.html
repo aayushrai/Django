@@ -1,0 +1,9 @@
+{% extends 'music/base.html' %}
+{% block title%}Add Album{% endblock %}
+
+{% block body %}
+<form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+      {% include 'music/form_template.html'%}
+      {% csrf_token %}
+</form>
+{% endblock %}

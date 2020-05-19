@@ -17,6 +17,7 @@
     </style>
 </head>
 <body>
+<!--navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -38,7 +39,7 @@
     </form>
     <ul class="navbar-nav mt-2 mt-lg-0">
     <li class="nav-item">
-        <a href="#" class="nav-link mr-sm-2">Add Album</a>
+        <a href="{% url 'music:add-album' %}" class="nav-link mr-sm-2" >Add Album</a>
     </li>
     <li class="nav-item">
         <a href="#" class="nav-link mr-sm-2">Logout</a>
@@ -46,6 +47,9 @@
     </ul>
   </div>
 </nav>
+<!--end navbar-->
+<!-- Button to Open the Modal -->
+
 {% block body %}
 {% endblock %}
 
