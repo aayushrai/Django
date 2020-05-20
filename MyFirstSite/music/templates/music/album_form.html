@@ -2,8 +2,12 @@
 {% block title%}Add Album{% endblock %}
 
 {% block body %}
-<form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
-      {% include 'music/form_template.html'%}
-      {% csrf_token %}
-</form>
+<div class="row container-fluid">
+    <div class="col-lg-6 col-sm-12 col-md-6">
+    <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+          {% include 'music/form_template.html'%}
+          {% csrf_token %}
+    </form>
+    </div>
+</div>
 {% endblock %}
