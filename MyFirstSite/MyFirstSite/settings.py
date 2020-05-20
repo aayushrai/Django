@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+     'crispy_forms',
     'music.apps.MusicConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -119,3 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
