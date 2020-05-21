@@ -3,7 +3,7 @@
 
 {% block body %}
 <div class="row container-fluid">
-    <form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+    <form action="{% url 'music:index' %}" class="was-validated" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {% include 'music/form_template.html'%}
     </form>
