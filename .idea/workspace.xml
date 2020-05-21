@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyFirstSite/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,76 +18,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html">
+        <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            <state relative-caret-position="310">
+              <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="e#635#667#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -107,21 +47,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/details.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/admin.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/static/music/style.css" />
-        <option value="$PROJECT_DIR$/MyFirstSite/music/models.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/add_album_form.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/base.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/model_form_template.html" />
-        <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/urls.py" />
-        <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/views.py" />
+        <option value="$PROJECT_DIR$/MyFirstSite/music/models.py" />
+        <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html" />
+        <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html" />
+        <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py" />
       </list>
     </option>
   </component>
@@ -365,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590073955267</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Update Details css">
+      <created>1590076645940</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1590076645940</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -383,7 +330,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4993395" weight="0.32531825" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" weight="0.32531825" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" visible="true" weight="0.32531825" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5006605" side_tool="true" weight="0.32531825" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32956153" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -469,7 +416,8 @@
     <MESSAGE value="Form" />
     <MESSAGE value="Delete view" />
     <MESSAGE value="Delete view and update view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete view and update view" />
+    <MESSAGE value="Update Details css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Details css" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MyFirstSite/manage.py">
@@ -496,16 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding>
-            <element signature="e#635#667#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyFirstSite/music/static/music/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -513,17 +451,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="122" column="24" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
+        <state relative-caret-position="442">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/base.html">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+        <state relative-caret-position="170">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="109" column="17" lean-forward="true" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -544,47 +502,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="7">
+          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="9" column="72" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        <state relative-caret-position="149">
+          <caret line="10" column="72" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/urls.py">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        <state relative-caret-position="310">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#635#667#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
         </state>
       </provider>
     </entry>
