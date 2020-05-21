@@ -2,7 +2,10 @@ from .models import Album,Song
 from django.views import generic
 from django.views.generic.edit import  CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
-# Create your views here.
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate,login
+from django.views.generic import View
+from .forms import UserForm
 
 class IndexView(generic.ListView):
     template_name = "music/index.html"
