@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="Blue print for create user">
-      <change afterPath="$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.html" afterDir="false" />
+    <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyFirstSite/music/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyFirstSite/music/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,65 +12,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="14" selection-end-line="10" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="14" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/forms.py">
+        <entry file="file://$PROJECT_DIR$/MySecondSite/calc/apps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/urls.py">
+        <entry file="file://$PROJECT_DIR$/MySecondSite/MySecondSite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="187">
+              <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -102,18 +53,19 @@
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/add_album_form.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/base.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/model_form_template.html" />
-        <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/album_form.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/models.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/details.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/index.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/MyFirstSite/urls.py" />
-        <option value="$PROJECT_DIR$/MyFirstSite/music/views.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/urls.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.py" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.html" />
         <option value="$PROJECT_DIR$/MyFirstSite/music/forms.py" />
+        <option value="$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html" />
+        <option value="$PROJECT_DIR$/MyFirstSite/music/views.py" />
+        <option value="$PROJECT_DIR$/MySecondSite/MySecondSite/settings.py" />
       </list>
     </option>
   </component>
@@ -129,6 +81,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,34 +98,29 @@
               <item name="Django" type="b2602c69:ProjectViewProjectNode" />
               <item name="Django" type="462c0819:PsiDirectoryNode" />
               <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
-              <item name="music" type="462c0819:PsiDirectoryNode" />
+              <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Django" type="b2602c69:ProjectViewProjectNode" />
               <item name="Django" type="462c0819:PsiDirectoryNode" />
-              <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
-              <item name="music" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="MySecondSite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Django" type="b2602c69:ProjectViewProjectNode" />
               <item name="Django" type="462c0819:PsiDirectoryNode" />
-              <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
-              <item name="music" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="music" type="462c0819:PsiDirectoryNode" />
+              <item name="MySecondSite" type="462c0819:PsiDirectoryNode" />
+              <item name="calc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Django" type="b2602c69:ProjectViewProjectNode" />
               <item name="Django" type="462c0819:PsiDirectoryNode" />
-              <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
-              <item name="MyFirstSite" type="462c0819:PsiDirectoryNode" />
+              <item name="MySecondSite" type="462c0819:PsiDirectoryNode" />
+              <item name="MySecondSite" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,13 +326,28 @@
       <option name="project" value="LOCAL" />
       <updated>1590080658930</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Create user">
+      <created>1590085022195</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1590085022195</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Create user">
+      <created>1590089638582</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1590089638582</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1334214" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1334214" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -395,7 +358,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4993395" weight="0.32531825" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" visible="true" weight="0.32531825" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4993395" visible="true" weight="0.32531825" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5006605" side_tool="true" weight="0.32531825" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32956153" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -484,7 +447,8 @@
     <MESSAGE value="Update Details css" />
     <MESSAGE value="User upload file" />
     <MESSAGE value="Blue print for create user" />
-    <option name="LAST_COMMIT_MESSAGE" value="Blue print for create user" />
+    <MESSAGE value="Create user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create user" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/MyFirstSite/manage.py">
@@ -528,13 +492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="109" column="17" lean-forward="true" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7">
@@ -569,10 +526,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        <state>
+          <caret column="43" selection-start-column="43" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -583,26 +540,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="14" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyFirstSite/music/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="850">
+          <caret line="57" column="32" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/registration_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MyFirstSite/music/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
+        <state relative-caret-position="85">
           <caret line="6" column="64" selection-start-line="6" selection-start-column="64" selection-end-line="6" selection-end-column="64" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
@@ -610,13 +567,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/forms.py">
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/music/templates/music/form_template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MySecondSite/MySecondSite/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="33" column="26" lean-forward="true" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyFirstSite/MyFirstSite/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1608">
+          <caret line="109" column="17" lean-forward="true" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MySecondSite/calc/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
