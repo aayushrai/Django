@@ -14,10 +14,11 @@ def gen(camera):
 def video_feed(request):
 	return StreamingHttpResponse(gen(VideoCamera()),content_type='multipart/x-mixed-replace; boundary=frame')
 
-
-def webcam_feed():
-	return StreamingHttpResponse(gen(IPWebCam()),content_type='multipart/x-mixed-replace; boundary=frame')
-
-def Ipwebcam(request):
+def webcam_feed(request):
 	link = str(request.POST["link"])
+	return StreamingHttpResponse(gen(IPWebCam(link)),content_type='multipart/x-mixed-replace; boundary=frame')
+
+def ipweblink(request):
+	return render(request,"streamapp/ipwebcam.html")
+
 

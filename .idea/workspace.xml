@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/VideoStream/streamapp/templates/streamapp/ipwebcam.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/templates/streamapp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/templates/streamapp/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/templates/streamapp/ipwebcam.html" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/templates/streamapp/ipwebcam.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +272,21 @@
       <option name="project" value="LOCAL" />
       <updated>1590326308562</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="video stream">
+      <created>1590330368221</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1590330368221</updated>
+    </task>
+    <task id="LOCAL-00032" summary="video stream">
+      <created>1590330420760</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1590330420760</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -326,20 +343,21 @@
     <MESSAGE value="Add number" />
     <MESSAGE value="Rest framework" />
     <MESSAGE value="stock view" />
-    <option name="LAST_COMMIT_MESSAGE" value="stock view" />
+    <MESSAGE value="video stream" />
+    <option name="LAST_COMMIT_MESSAGE" value="video stream" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590326307458">
+    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590330418771">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590326307458" />
+    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590330418771" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1590155115273">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590155115273" />
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1590324943275">
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1590330433091">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590324943275" />
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590330433091" />
   </component>
 </project>

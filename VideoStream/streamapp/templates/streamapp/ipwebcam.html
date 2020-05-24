@@ -1,5 +1,5 @@
-<form action="{% url 'video:'%}" method="post">
+<form action="{% url 'video:webcam_feed' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="link">Enter IpWebCam URL:
+    Enter IpWebCam URL:<input type="text" name="link"><br>
     <input type="submit">
 </form>
