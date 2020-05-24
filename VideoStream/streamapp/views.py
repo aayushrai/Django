@@ -15,8 +15,10 @@ def video_feed(request):
 	return StreamingHttpResponse(gen(VideoCamera(0)),content_type='multipart/x-mixed-replace; boundary=frame')
 
 def webcam_feed(request):
-	#link = "http://192.168.43.1:8080/video"
-	link = str(request.POST["link"])
+	try:
+	    link = str(request.POST["link"])
+	except:
+		link = "http://192.168.43.1:8080/video"
 	return StreamingHttpResponse(gen(VideoCamera(link)),content_type='multipart/x-mixed-replace; boundary=frame')
 
 def ipweblink(request):

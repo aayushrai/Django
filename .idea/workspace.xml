@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoStream/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VideoStream/streamapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/VideoStream/streamapp/views.py" afterDir="false" />
     </list>
@@ -291,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590331175593</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="ip camera working">
+      <created>1590334718233</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1590334718233</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -324,7 +332,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="template" />
     <MESSAGE value="music app" />
     <MESSAGE value="Favorite" />
     <MESSAGE value="CSS" />
@@ -349,20 +356,21 @@
     <MESSAGE value="stock view" />
     <MESSAGE value="video stream" />
     <MESSAGE value="iplink" />
-    <option name="LAST_COMMIT_MESSAGE" value="iplink" />
+    <MESSAGE value="ip camera working" />
+    <option name="LAST_COMMIT_MESSAGE" value="ip camera working" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590331174371">
+    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590334716882">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590331174371" />
+    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590334716882" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1590155115273">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590155115273" />
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1590331192062">
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1590334741570">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590331192062" />
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590334741570" />
   </component>
 </project>
