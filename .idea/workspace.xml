@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b8a9a26-7745-4ab7-8558-2dfd22825bd9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MySecondSite/templates/result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/deadl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/deadl.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MySecondSite/companies/serializer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MySecondSite/calc/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/MySecondSite/calc/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MySecondSite/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/MySecondSite/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590151450657</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Add number">
+      <created>1590156572544</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1590156572544</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -305,16 +310,21 @@
     <MESSAGE value="Create user" />
     <MESSAGE value="MySecondsite" />
     <MESSAGE value="Add Base template" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Base template" />
+    <MESSAGE value="Add number" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add number" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590155372662">
+    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1590156570644">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590155372662" />
+    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590156570644" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1590155115273">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590155115273" />
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1590156586883">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1590156586883" />
   </component>
 </project>
