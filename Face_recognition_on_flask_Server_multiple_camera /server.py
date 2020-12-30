@@ -146,11 +146,16 @@ def start():
         print("post-->",url)
         if url == "0":
             url = 0
-        if url not in camera_obj_dis:
-            camera_obj_dis[url] = [True,VideoCamera(url)]
+        flag = True
+        if url in camera_obj_dis:
+            if camera_obj_dis[url][0]:
+                flag = False
+        if flag:
+            camera_obj_dis[url] = [False,VideoCamera(url)]
+            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url]])
+            camera_obj_dis[url][0] = True
+            thread.start()
             
-        thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url]])
-        thread.start()
     return "started"
 
 @app.route('/stop',methods=['GET', 'POST'])
@@ -160,10 +165,15 @@ def stop():
         url = request.form.get("ip_cam")
         if url == "0":
             url = 0
-        if camera_obj_dis[url][0]:
-            camera_obj_dis[url][1].stop()
-            print("url:",url," Stopped")
-        camera_obj_dis[url][0] = False
+        if url in camera_obj_dis:
+            if camera_obj_dis[url][0]:
+                camera_obj_dis[url][1].stop()
+                print("camera :",url," Stopped")
+                camera_obj_dis[url][0] = False
+        else:
+            print("camera: {} you trying to stop is not in camera_obj_dis".format(url))
+            
+        
     return 'stopped'
 
 
