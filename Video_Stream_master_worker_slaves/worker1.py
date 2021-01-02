@@ -34,7 +34,7 @@ counter = 0
 url1 = "http://127.0.0.1:6000/"
 url2 = "http://127.0.0.1:7000/"
 # @app.before_first_request
-def light_thread(camera):
+def light_thread(camera,camera_name):
     print(camera)
     global counter
     while camera[0]:
@@ -44,7 +44,7 @@ def light_thread(camera):
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
                 try:
-                    requests.post(url1, data = {"image":jpg_as_text},timeout=.5)
+                    requests.post(url1, data = {"image":jpg_as_text,"camera":camera_name},timeout=.5)
                 except Exception as e:
                     print("Request time out")
                     print("Exception:",e)
@@ -53,7 +53,7 @@ def light_thread(camera):
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
                 try:
-                    requests.post(url2, data = {"image":jpg_as_text},timeout=.5)
+                    requests.post(url2, data = {"image":jpg_as_text,"camera":camera_name},timeout=.5)
                 except Exception as e:
                     print("Request time out")
                     print("Exception:",e)
@@ -77,7 +77,7 @@ def start():
                 flag = False
         if flag:
             camera_obj_dis[url] = [False,VideoCamera(url)]
-            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url]])
+            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url],url])
             camera_obj_dis[url][0] = True
             thread.start()
             

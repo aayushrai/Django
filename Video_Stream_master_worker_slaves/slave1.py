@@ -8,6 +8,8 @@ import os
 import face_recognition
 from imutils.video import VideoStream
 import time
+import requests
+import datetime
 app = Flask(__name__)
 
 load_encodings = False
@@ -57,10 +59,9 @@ class FaceRecog:
         return rects
 
 
-    def face_recog(self,frame):
+    def face_recog(self,frame,camera_name):
         global known_names,known_faces
-        image = frame
-        image2 = frame.copy()
+        image2 = frame
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
         rects = self.face_detection(image2)
         encodings = face_recognition.face_encodings(image2, rects)
@@ -80,34 +81,25 @@ class FaceRecog:
                     else:
                         match = "Unknown"
                         print("Unknown found")
+                    url = "http://127.0.0.1:5050/data"
+                    data = {"camera":camera_name,"face":match,"timestamp":str(datetime.datetime.now())}
+                    requests.post(url,data=data)
             
-
-                    top_left = (face_location[3], face_location[0])
-                    bottom_right = (face_location[1], face_location[2])
-
-                    color = [0, 255, 0]
-
-                    cv2.rectangle(image, top_left, bottom_right, 1)
-
-                    top_left = (face_location[3], face_location[0])
-                    bottom_right = (face_location[1], face_location[2])
-
-                    cv2.rectangle(image, top_left, bottom_right,(0,0,255),2)
-                    cv2.putText(image, match, (face_location[3], face_location[2]+25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-    def get_frame(self,frame):
+    def get_frame(self,frame,camera_name):
         if frame.shape:
-            self.face_recog(frame)
+            self.face_recog(frame,camera_name)
 
 face_r = FaceRecog()
             
 @app.route("/", methods=["POST"])
 def home():
     img = request.form.get("image")
+    camera_name = request.form.get("camera")
     jpg_original = base64.b64decode(img)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     image_buffer = cv2.imdecode(jpg_as_np, flags=1)
     st = time.time()
-    face_r.get_frame(image_buffer)
+    face_r.get_frame(image_buffer,camera_name)
     en = time.time()
     print(en - st)
     return 'Success!'
