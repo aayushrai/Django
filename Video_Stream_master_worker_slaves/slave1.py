@@ -1,34 +1,27 @@
-import base64
-import numpy as np
-from flask import Flask, render_template, Response, jsonify,request
-from imutils.video import VideoStream
-import cv2
-import threading
-import time
 import os
 import face_recognition
+from flask import Flask, request
+import cv2
+import base64
+import numpy as np
+import os
+import face_recognition
+from imutils.video import VideoStream
+
 app = Flask(__name__)
-
-
-
-@app.route('/')
-def index():
-    return "hello"
 
 load_encodings = False
 face_cascade = cv2.CascadeClassifier(os.getcwd() + '/haarcascade_frontalface_default.xml')
 known_names,known_faces = [],[]
-class VideoCamera():
 
-    def __init__(self,url):
+class FaceRecog:
+    
+    def __init__(self):
         global load_encodings
-        self.url = url
-        self.video=VideoStream(src=self.url).start()
         if not load_encodings:
-            VideoCamera.update_encoding()
+            FaceRecog.update_encoding()
             load_encodings=True
-
-
+    
     @staticmethod
     def update_encoding():
         global known_names,known_faces,face_cascade
@@ -52,15 +45,7 @@ class VideoCamera():
                     known_names.append(folder)
                 else:
                     print(folder,img_name,": Face not found in image" )
-
-    def __del__(self):
-        self.video.stream.release() 	
-
-    def stop(self):
-        self.video.stream.release()
-
-
-
+    
     def face_detection(self,image):
         rects = []
         self.face_cascade = cv2.CascadeClassifier(os.getcwd() + '/haarcascade_frontalface_default.xml')
@@ -72,10 +57,10 @@ class VideoCamera():
         return rects
 
 
-    def face_recog(self):
+    def face_recog(self,frame):
         global known_names,known_faces
-        image = self.frame
-        image2 = self.frame.copy()
+        image = frame
+        image2 = frame.copy()
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
         rects = self.face_detection(image2)
         encodings = face_recognition.face_encodings(image2, rects)
@@ -91,10 +76,10 @@ class VideoCamera():
                     distance = face_recognition.face_distance(known_faces,face_encoding)
                     if True in results:
                         match = known_names[results.index(True)]
-                        print(f"Match Found:", {match}," in camera ",str(self.url))
+                        print(f"Match Found:", {match}," in camera ")
                     else:
                         match = "Unknown"
-                        print("Unknown found in camera " + str(self.url))
+                        print("Unknown found")
             
 
                     top_left = (face_location[3], face_location[0])
@@ -109,77 +94,20 @@ class VideoCamera():
 
                     cv2.rectangle(image, top_left, bottom_right,(0,0,255),2)
                     cv2.putText(image, match, (face_location[3], face_location[2]+25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+    def get_frame(self,frame):
+        if frame.shape:
+            self.face_recog(frame)
+
+face_r = FaceRecog()
             
-    def get_frame(self):
-        self.frame = self.video.read()
-        st = time.time()
-        if self.frame.shape:
-            self.face_recog()
-        ret, jpeg = cv2.imencode('.jpg', self.frame)
-        en = time.time()
-        print(en - st)
-        return jpeg.tobytes()
-
-
-
-# @app.route('/video_feed')
-# def video_feed():
-#     if request.method == "post":
-#         url = request.form.get("ip_cam")
-#         print(url)
-#     else:
-#         url = 0
-
-# light_on = False
-# camera = None
-camera_obj_dis = {}
-
-# @app.before_first_request
-def light_thread(camera):
-    print(camera)
-    while camera[0]:
-        frame = camera[1].get_frame()
-
-
-@app.route('/start',methods=['GET', 'POST'])
-def start():
-    # stop the function test
-    global camera_obj_dis
-    if request.method == "POST":
-        url = request.form.get("ip_cam")
-        print("post-->",url)
-        if url == "0":
-            url = 0
-        flag = True
-        if url in camera_obj_dis:
-            if camera_obj_dis[url][0]:
-                flag = False
-        if flag:
-            camera_obj_dis[url] = [False,VideoCamera(url)]
-            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url]])
-            camera_obj_dis[url][0] = True
-            thread.start()
-            
-    return "started"
-
-@app.route('/stop',methods=['GET', 'POST'])
-def stop():
-    global camera_obj_dis
-    if request.method == "POST":
-        url = request.form.get("ip_cam")
-        if url == "0":
-            url = 0
-        if url in camera_obj_dis:
-            if camera_obj_dis[url][0]:
-                camera_obj_dis[url][1].stop()
-                print("camera :",url," Stopped")
-                camera_obj_dis[url][0] = False
-        else:
-            print("camera: {} you trying to stop is not in camera_obj_dis".format(url))
-            
-        
-    return 'stopped'
-
+@app.route("/", methods=["POST"])
+def home():
+    img = request.form.get("image")
+    jpg_original = base64.b64decode(img)
+    jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
+    image_buffer = cv2.imdecode(jpg_as_np, flags=1)
+    face_r.get_frame(image_buffer)
+    return 'Success!'
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,port="5000",threaded=True)
+    app.run(host='127.0.0.1', debug=True,port="6000",threaded=True)

@@ -94,6 +94,7 @@ class VideoCamera():
                         print(f"Match Found:", {match})
                     else:
                         match = "Unknown"
+                        print("Unknown found")
             
 
                     top_left = (face_location[3], face_location[0])
