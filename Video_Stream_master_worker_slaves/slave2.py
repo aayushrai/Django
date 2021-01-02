@@ -8,6 +8,7 @@ import os
 import face_recognition
 from imutils.video import VideoStream
 import time
+
 app = Flask(__name__)
 
 load_encodings = False
@@ -113,4 +114,4 @@ def home():
     return 'Success!'
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,port="6000",threaded=True)
+    app.run(host='127.0.0.1', debug=True,port="7000",threaded=True)

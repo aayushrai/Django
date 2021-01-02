@@ -31,19 +31,33 @@ class VideoCamera():
 camera_obj_dis = {}
 counter = 0
 
-url = "http://127.0.0.1:6000/"
+url1 = "http://127.0.0.1:6000/"
+url2 = "http://127.0.0.1:7000/"
 # @app.before_first_request
 def light_thread(camera):
     print(camera)
     global counter
     while camera[0]:
         frame = camera[1].get_frame()
-        if counter%10:
+        if counter%2:
             if frame.shape:
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
-                requests.post(url, data = {"image":jpg_as_text})
-                counter = 0
+                try:
+                    requests.post(url1, data = {"image":jpg_as_text},timeout=.5)
+                except Exception as e:
+                    print("Request time out")
+                    print("Exception:",e)
+        else:
+            if frame.shape:
+                retval, buffer = cv2.imencode('.jpg', frame)
+                jpg_as_text = base64.b64encode(buffer)
+                try:
+                    requests.post(url2, data = {"image":jpg_as_text},timeout=.5)
+                except Exception as e:
+                    print("Request time out")
+                    print("Exception:",e)
+    
         counter += 1
         
 
