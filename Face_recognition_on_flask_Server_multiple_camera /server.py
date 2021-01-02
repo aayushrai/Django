@@ -111,9 +111,12 @@ class VideoCamera():
             
     def get_frame(self):
         self.frame = self.video.read()
+        st = time.time()
         if self.frame.shape:
             self.face_recog()
         ret, jpeg = cv2.imencode('.jpg', self.frame)
+        en = time.time()
+        print(en - st)
         return jpeg.tobytes()
 
 
@@ -135,7 +138,7 @@ def light_thread(camera):
     print(camera)
     while camera[0]:
         frame = camera[1].get_frame()
-    
+
 
 @app.route('/start',methods=['GET', 'POST'])
 def start():

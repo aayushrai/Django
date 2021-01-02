@@ -111,9 +111,12 @@ class VideoCamera():
             
     def get_frame(self):
         self.frame = self.video.read()
+        st = time.time()
         if self.frame.shape:
             self.face_recog()
         ret, jpeg = cv2.imencode('.jpg', self.frame)
+        en = time.time()
+        print(en - st)
         return jpeg.tobytes()
 
 
@@ -166,4 +169,4 @@ def stop():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,port="5000",threaded=True)
+    app.run(host='127.0.0.1', debug=True,port="7000",threaded=True)
