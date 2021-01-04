@@ -7,6 +7,7 @@ import threading
 import time
 import os
 import requests
+import datetime
 app = Flask(__name__)
 
 
@@ -33,8 +34,17 @@ counter = 0
 
 url1 = "http://127.0.0.1:6000/"
 url2 = "http://127.0.0.1:7000/"
+
+
+def create_request_to_slave(url,jpg_as_text,camera_name,timeout,timestamp):
+    try:
+        requests.post(url, data = {"image":jpg_as_text,"camera":camera_name,"timestamp":timestamp},timeout=timeout)
+    except Exception as e:
+        print("Request time out")
+        print("Exception:",e)
+        
 # @app.before_first_request
-def light_thread(camera,camera_name):
+def light_thread(camera,camera_name,timestamp):
     print(camera)
     global counter
     while camera[0]:
@@ -43,20 +53,12 @@ def light_thread(camera,camera_name):
             if frame.shape:
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
-                try:
-                    requests.post(url1, data = {"image":jpg_as_text,"camera":camera_name},timeout=.5)
-                except Exception as e:
-                    print("Request time out")
-                    print("Exception:",e)
+                create_request_to_slave(url1,jpg_as_text,camera_name,0.5,timestamp)    
         else:
             if frame.shape:
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
-                try:
-                    requests.post(url2, data = {"image":jpg_as_text,"camera":camera_name},timeout=.5)
-                except Exception as e:
-                    print("Request time out")
-                    print("Exception:",e)
+                create_request_to_slave(url2,jpg_as_text,camera_name,0.5,timestamp)  
     
         counter += 1
         
@@ -77,7 +79,8 @@ def start():
                 flag = False
         if flag:
             camera_obj_dis[url] = [False,VideoCamera(url)]
-            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url],url])
+            timestamp = str(datetime.datetime.now())
+            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url],url,timestamp])
             camera_obj_dis[url][0] = True
             thread.start()
             

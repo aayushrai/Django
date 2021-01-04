@@ -10,6 +10,7 @@ from imutils.video import VideoStream
 import time
 import requests
 import datetime
+import threading
 app = Flask(__name__)
 
 load_encodings = False
@@ -59,7 +60,7 @@ class FaceRecog:
         return rects
 
 
-    def face_recog(self,frame,camera_name):
+    def face_recog(self,frame,camera_name,timestamp,starttime):
         global known_names,known_faces
         image2 = frame
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
@@ -77,17 +78,18 @@ class FaceRecog:
                     distance = face_recognition.face_distance(known_faces,face_encoding)
                     if True in results:
                         match = known_names[results.index(True)]
-                        print(f"Match Found:", {match}," in camera ")
+                        print(f"Match Found:", {match}," in camera and time taken by face recog is ",time.time() - starttime)
                     else:
                         match = "Unknown"
-                        print("Unknown found")
+                        print("Unknown found and time taken by face recog is ",time.time() - starttime)
                     url = "http://127.0.0.1:5050/data"
-                    data = {"camera":camera_name,"face":match,"timestamp":str(datetime.datetime.now())}
+                    data = {"camera":camera_name,"face":match,"timestamp":timestamp}
                     requests.post(url,data=data)
             
-    def get_frame(self,frame,camera_name):
+    def get_frame(self,frame,camera_name,timestamp):
         if frame.shape:
-            self.face_recog(frame,camera_name)
+            starttime = time.time()
+            self.face_recog(frame,camera_name,timestamp,starttime)
 
 face_r = FaceRecog()
             
@@ -95,13 +97,14 @@ face_r = FaceRecog()
 def home():
     img = request.form.get("image")
     camera_name = request.form.get("camera")
+    timestamp = request.form.get("timestamp")
     jpg_original = base64.b64decode(img)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     image_buffer = cv2.imdecode(jpg_as_np, flags=1)
-    st = time.time()
-    face_r.get_frame(image_buffer,camera_name)
-    en = time.time()
-    print(en - st)
+    
+    # t1 = threading.Thread(target=face_r.get_frame,args=[image_buffer,camera_name,timestamp])
+    # t1.start()
+    face_r.get_frame(image_buffer,camera_name,timestamp)
     return 'Success!'
 
 if __name__ == '__main__':
