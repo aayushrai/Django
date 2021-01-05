@@ -18,7 +18,7 @@ class CameraInfo(Base):
 
 
     def __repr__(self):
-        return '<camera_name %r>' % (self.camera_name)
+        return 'camera_name %r and time %r' % (self.camera_name,self.timestamp)
 
 class logger(Base):
     __tablename__ = 'logger'

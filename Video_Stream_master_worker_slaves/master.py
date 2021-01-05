@@ -34,7 +34,7 @@ def sync_database_online(url):
             else:
                 logs = CameraInfo.query.filter(CameraInfo.timestamp >= lastupdate).all()
                 # logs = db_session.query(CameraInfo).filter(CameraInfo.timestamp >= lastupdate).all()
-                print(logs)
+                print(lastupdate,logs)
             # print(logs)
             for obj in logs:
                 data = {"face":obj.face,"camera":obj.camera_name,"timestamp":obj.timestamp,"service":obj.service}
