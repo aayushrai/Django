@@ -60,7 +60,7 @@ class FaceRecog:
         return rects
 
 
-    def face_recog(self,frame,camera_name,timestamp,starttime):
+    def face_recog(self,frame,camera_name,timestamp,starttime,service):
         global known_names,known_faces
         image2 = frame
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
@@ -83,13 +83,13 @@ class FaceRecog:
                         match = "Unknown"
                         print("Unknown found and time taken by face recog is ",time.time() - starttime)
                     url = "http://127.0.0.1:5050/data"
-                    data = {"camera":camera_name,"face":match,"timestamp":timestamp}
+                    data = {"camera":camera_name,"face":match,"timestamp":timestamp,"service":service}
                     requests.post(url,data=data)
             
-    def get_frame(self,frame,camera_name,timestamp):
+    def get_frame(self,frame,camera_name,timestamp,service):
         if frame.shape:
             starttime = time.time()
-            self.face_recog(frame,camera_name,timestamp,starttime)
+            self.face_recog(frame,camera_name,timestamp,starttime,service)
 
 face_r = FaceRecog()
             
@@ -98,13 +98,16 @@ def home():
     img = request.form.get("image")
     camera_name = request.form.get("camera")
     timestamp = request.form.get("timestamp")
+    service = request.form.get("service")
     jpg_original = base64.b64decode(img)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     image_buffer = cv2.imdecode(jpg_as_np, flags=1)
     
     # t1 = threading.Thread(target=face_r.get_frame,args=[image_buffer,camera_name,timestamp])
     # t1.start()
-    face_r.get_frame(image_buffer,camera_name,timestamp)
+    
+    print(timestamp)
+    face_r.get_frame(image_buffer,camera_name,timestamp,service)
     return 'Success!'
 
 if __name__ == '__main__':

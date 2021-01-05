@@ -36,29 +36,30 @@ url1 = "http://127.0.0.1:6000/"
 url2 = "http://127.0.0.1:7000/"
 
 
-def create_request_to_slave(url,jpg_as_text,camera_name,timeout,timestamp):
+def create_request_to_slave(url,jpg_as_text,camera_name,timeout,timestamp,service):
     try:
-        requests.post(url, data = {"image":jpg_as_text,"camera":camera_name,"timestamp":timestamp},timeout=timeout)
+        requests.post(url, data = {"image":jpg_as_text,"camera":camera_name,"timestamp":timestamp,"service":service},timeout=timeout)
     except Exception as e:
         print("Request time out")
         print("Exception:",e)
         
 # @app.before_first_request
-def light_thread(camera,camera_name,timestamp):
+def light_thread(camera,camera_name,service):
     print(camera)
     global counter
     while camera[0]:
         frame = camera[1].get_frame()
+        timestamp = datetime.datetime.now()
         if counter%2:
             if frame.shape:
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
-                create_request_to_slave(url1,jpg_as_text,camera_name,0.5,timestamp)    
+                create_request_to_slave(url1,jpg_as_text,camera_name,0.5,timestamp,service)    
         else:
             if frame.shape:
                 retval, buffer = cv2.imencode('.jpg', frame)
                 jpg_as_text = base64.b64encode(buffer)
-                create_request_to_slave(url2,jpg_as_text,camera_name,0.5,timestamp)  
+                create_request_to_slave(url2,jpg_as_text,camera_name,0.5,timestamp,service)  
     
         counter += 1
         
@@ -70,6 +71,7 @@ def start():
     global camera_obj_dis
     if request.method == "POST":
         url = request.form.get("ip_cam")
+        service = request.form.get("service")
         print("post-->",url)
         if url == "0":
             url = 0
@@ -79,8 +81,7 @@ def start():
                 flag = False
         if flag:
             camera_obj_dis[url] = [False,VideoCamera(url)]
-            timestamp = str(datetime.datetime.now())
-            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url],url,timestamp])
+            thread = threading.Thread(target=light_thread,args=[camera_obj_dis[url],url,service])
             camera_obj_dis[url][0] = True
             thread.start()
             
