@@ -9,6 +9,7 @@ def onlineDB():
     timestamp = request.form.get("timestamp")
     service = request.form.get("service")
     print(camera_name,face,timestamp,service)
+    # print(request.form.get("logs"))
     return "connected"
 
 

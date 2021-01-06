@@ -11,6 +11,7 @@ import time
 import datetime
 import requests
 import threading
+from collections import deque
 
 app = Flask(__name__)
 
@@ -22,6 +23,9 @@ class FaceRecog:
     
     def __init__(self):
         global load_encodings
+        self.qSize = 8
+        self.faceRecogQ = deque(maxlen=self.qSize)
+        self.counter = 0
         if not load_encodings:
             FaceRecog.update_encoding()
             load_encodings=True
@@ -80,15 +84,34 @@ class FaceRecog:
                     distance = face_recognition.face_distance(known_faces,face_encoding)
                     if True in results:
                         match = known_names[results.index(True)]
-                        print(f"Match Found:", {match}," in camera and time taken by face recog is ",time.time() - starttime)
+                        print(f"Match Found:", {match}," in camera::",camera_name , " and time taken by face recog is ",time.time() - starttime)
                     else:
                         match = "Unknown"
-                        print("Unknown found and time taken by face recog is ",time.time() - starttime)
+                        print("Unknown found in camera::",camera_name ," and time taken by face recog is ",time.time() - starttime)
                         
+                    self.faceRecogQ.append(match)
                     url = "http://127.0.0.1:5050/data"
-                    data = {"camera":camera_name,"face":match,"timestamp":timestamp,"service":service}
-                    requests.post(url,data=data)
                     
+                    if self.counter%self.qSize==0:
+                        flag,name = self.checkFaceRecogQ()
+                        if flag:
+                            data = {"camera":camera_name,"face":name,"timestamp":timestamp,"service":service}
+                            requests.post(url,data=data)
+                            print("-"*40)
+                            print("Sent to master for database update")
+                            print("-"*40)
+                        self.counter = 0
+                    self.counter += 1
+                    
+                    
+    
+    def checkFaceRecogQ(self):
+        for name in self.faceRecogQ:
+            if name != self.faceRecogQ[0]:
+                return [False,None]
+        return [True,self.faceRecogQ[0]]
+        
+                
     def get_frame(self,frame,camera_name,timestamp,service):
         if frame.shape:
             starttime = time.time()

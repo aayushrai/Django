@@ -27,19 +27,23 @@ def sync_database_online(url):
         lastupdateall = logger.query.all()
         if len(lastupdateall):
             lastupdate = lastupdateall[0].lastupdate
+        else:
+            lastupdate = None
         try:
             
             if not lastupdate:
                 logs = CameraInfo.query.all()
             else:
                 logs = CameraInfo.query.filter(CameraInfo.timestamp >= lastupdate).all()
-                # logs = db_session.query(CameraInfo).filter(CameraInfo.timestamp >= lastupdate).all()
-                print(lastupdate,logs)
-            # print(logs)
+    
             for obj in logs:
                 data = {"face":obj.face,"camera":obj.camera_name,"timestamp":obj.timestamp,"service":obj.service}
                 requests.post(url,data=data)
-                
+            
+            print("-"*40)
+            print("Data is sent for sycning online Database to local database")
+            print("-"*40)
+            
             newTime = datetime.datetime.now()
 
             if not lastupdate:
@@ -53,15 +57,18 @@ def sync_database_online(url):
                 db_session.commit()
                 
         except Exception as e:
+            print("-"*40)
             print(e)
-            print("Not able to update online database, may be system not connect to internet")
+            print("Not able to update online database, may be system not connect to internet or any other issue in sync_database_online function")
+            print("-"*40)
         finally:
-            time.sleep(60)
+            time.sleep(30)
+            
             
 
 t = threading.Thread(target=sync_database_online,args=[onlineDB])
 t.start()    
-
+previous_recognised_face = ""
 @app.route('/data', methods=["POST"])
 def index():
     global onlineDB
@@ -74,13 +81,21 @@ def index():
     db_session.add(c)
     db_session.commit()
     print(camera_name,face,timestamp,service)
-    return "hello"
+    return "Local database is updated"
 
-
+@app.route('/deleteall')
+def deleteAllRecod():
+    logs = CameraInfo.query.all()
+    for l in logs:
+        db_session.delete(l)
+    db_session.commit()
+    return "All record deleted succesfully"
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
+
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1",debug=True,port=5050,threaded=True)

@@ -8,9 +8,11 @@ import os
 import face_recognition
 from imutils.video import VideoStream
 import time
-import requests
 import datetime
+import requests
 import threading
+from collections import deque
+
 app = Flask(__name__)
 
 load_encodings = False
@@ -21,6 +23,9 @@ class FaceRecog:
     
     def __init__(self):
         global load_encodings
+        self.qSize = 8
+        self.faceRecogQ = deque(maxlen=self.qSize)
+        self.counter = 0
         if not load_encodings:
             FaceRecog.update_encoding()
             load_encodings=True
@@ -62,7 +67,8 @@ class FaceRecog:
 
     def face_recog(self,frame,camera_name,timestamp,starttime,service):
         global known_names,known_faces
-        image2 = frame
+        image = frame
+        image2 = frame.copy()
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
         rects = self.face_detection(image2)
         encodings = face_recognition.face_encodings(image2, rects)
@@ -78,35 +84,53 @@ class FaceRecog:
                     distance = face_recognition.face_distance(known_faces,face_encoding)
                     if True in results:
                         match = known_names[results.index(True)]
-                        print(f"Match Found:", {match}," in camera and time taken by face recog is ",time.time() - starttime)
+                        print(f"Match Found:", {match}," in camera::",camera_name , " and time taken by face recog is ",time.time() - starttime)
                     else:
                         match = "Unknown"
-                        print("Unknown found and time taken by face recog is ",time.time() - starttime)
+                        print("Unknown found in camera::",camera_name ," and time taken by face recog is ",time.time() - starttime)
+                        
+                    self.faceRecogQ.append(match)
                     url = "http://127.0.0.1:5050/data"
-                    data = {"camera":camera_name,"face":match,"timestamp":timestamp,"service":service}
-                    requests.post(url,data=data)
-            
+                    
+                    if self.counter%self.qSize==0:
+                        flag,name = self.checkFaceRecogQ()
+                        if flag:
+                            data = {"camera":camera_name,"face":name,"timestamp":timestamp,"service":service}
+                            requests.post(url,data=data)
+                            print("-"*40)
+                            print("Sent to master for database update")
+                            print("-"*40)
+                        self.counter = 0
+                    self.counter += 1
+                    
+                    
+    
+    def checkFaceRecogQ(self):
+        for name in self.faceRecogQ:
+            if name != self.faceRecogQ[0]:
+                return [False,None]
+        return [True,self.faceRecogQ[0]]
+        
+                
     def get_frame(self,frame,camera_name,timestamp,service):
         if frame.shape:
             starttime = time.time()
             self.face_recog(frame,camera_name,timestamp,starttime,service)
+            
 
 face_r = FaceRecog()
-            
+
 @app.route("/", methods=["POST"])
 def home():
-    img = request.form.get("image")
     camera_name = request.form.get("camera")
+    img = request.form.get("image")
     timestamp = request.form.get("timestamp")
     service = request.form.get("service")
     jpg_original = base64.b64decode(img)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     image_buffer = cv2.imdecode(jpg_as_np, flags=1)
-    
     # t1 = threading.Thread(target=face_r.get_frame,args=[image_buffer,camera_name,timestamp])
     # t1.start()
-    
-    print(timestamp)
     face_r.get_frame(image_buffer,camera_name,timestamp,service)
     return 'Success!'
 
