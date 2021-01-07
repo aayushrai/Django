@@ -10,14 +10,16 @@ import threading
 import datetime
 
 url = "http://127.0.0.1:5000/start"
-ip_cam = "http://192.168.50.103:8080/video"
+url2 = "http://127.0.0.1:5001/start"
+ip_cam = "http://192.168.252.2:8080/video"
+ip_cam1 = 0
 onlineDB = "http://127.0.0.1:5010/"
 
 # ip_cam2 = "http://192.168.52.190:8080/video"
 # ip_cam = 0
 # x = requests.post(url, data = {"ip_cam":ip_cam1})
 a = requests.post(url, data = {"ip_cam":ip_cam,"service":"face_recog"})
-# b = requests.post(url, data = {"ip_cam":ip_cam2})
+b = requests.post(url2, data = {"ip_cam":ip_cam1,"service":"face_recog"})
 
 app = Flask(__name__)
 init_db()
