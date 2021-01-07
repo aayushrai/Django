@@ -65,7 +65,7 @@ def light_thread(camera,camera_name,service):
         
 
 
-@app.route('/start',methods=['GET', 'POST'])
+@app.route('/startworker',methods=['GET', 'POST'])
 def start():
     # stop the function test
     global camera_obj_dis
@@ -78,6 +78,7 @@ def start():
         flag = True
         if url in camera_obj_dis:
             if camera_obj_dis[url][0]:
+                print("Camera:{} is already running".format(url))
                 flag = False
         if flag:
             camera_obj_dis[url] = [False,VideoCamera(url)]
@@ -87,7 +88,7 @@ def start():
             
     return "started"
 
-@app.route('/stop',methods=['GET', 'POST'])
+@app.route('/stopworker',methods=['GET', 'POST'])
 def stop():
     global camera_obj_dis
     if request.method == "POST":

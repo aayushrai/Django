@@ -9,8 +9,8 @@ import time
 import threading
 import datetime
 
-url = "http://127.0.0.1:5000/start"
-url2 = "http://127.0.0.1:5001/start"
+url = "http://127.0.0.1:5000/startworker"
+url2 = "http://127.0.0.1:5001/startworker"
 ip_cam = "http://192.168.252.2:8080/video"
 ip_cam1 = 0
 onlineDB = "http://127.0.0.1:5010/"
