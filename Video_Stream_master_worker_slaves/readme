@@ -1,0 +1,4 @@
+worker port : 5000 series
+slave port : 6000 series
+master port : 7001 
+act_online : 7000

@@ -1,13 +1,12 @@
 #/bin/bash
 
-gunicorn --bind 127.0.0.1:5000 worker1:app &
-gunicorn --bind 127.0.0.1:5001 worker1:app &
+gunicorn --bind 127.0.0.1:5000 worker:app &
+gunicorn --bind 127.0.0.1:5001 worker:app &
 gunicorn --bind 127.0.0.1:6000 slave1:app &
-gunicorn --bind 127.0.0.1:7000 slave1:app &
-python3 master.py &
-python3 act_as_online_database.py
+gunicorn --bind 127.0.0.1:6001 slave1:app &
+python3 act_as_online_database.py &
+python3 master.py 
 
-pkill -P1 gunicorn
 pkill gunicorn
 pkill python3
 # python3 worker1.py & 

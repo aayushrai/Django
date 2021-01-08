@@ -90,7 +90,7 @@ class FaceRecog:
                         print("Unknown found in camera::",camera_name ," and time taken by face recog is ",time.time() - starttime)
                         
                     self.faceRecogQ.append(match)
-                    url = "http://127.0.0.1:5050/data"
+                    url = "http://127.0.0.1:7001/data"
                     
                     if self.counter%self.qSize==0:
                         flag,name = self.checkFaceRecogQ()
