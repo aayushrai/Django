@@ -1,9 +1,10 @@
-from flask import Flask,request
+from flask import Flask,request,jsonify
 app = Flask(__name__)
 
-@app.route("/",methods=["POST","GET"])
+
+@app.route("/onlinedb",methods=["POST","GET"])
 def onlineDB():
-    print("Request")
+    print("Request in onlinedb")
     camera_name = request.form.get("camera")
     face = request.form.get("face")
     timestamp = request.form.get("timestamp")
@@ -13,6 +14,12 @@ def onlineDB():
     return "connected"
 
 
+ip_config = [{"ip_cam":0,"services":["face_recog"]},{"ip_cam":"http://192.168.252.2:8080/video","services":["face_recog","mask_recog"]}]
+
+@app.route("/cloudfun",methods=["POST","GET"])
+def cloudFun():
+    print("Request in clouldfun")
+    return jsonify(ip_config)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1",debug=True,port=5010)
