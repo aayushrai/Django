@@ -29,19 +29,19 @@ def assignner(lst,listOf):
     return lst[0][1],lst
 
 
-def unassignner(cam,lst):
+def unassignner(cam,lst,listOf):
     ll = -1
     for i in range(len(lst)):
         if lst[i][1] == cam:
             ll = i
             break
     if ll == -1:
-        print("[master][ping_to_cloud][unassignner] May camera not assign to any worker")
+        print("[master][ping_to_cloud][unassignner] May camera not assign to any {}".format(listOf))
     else:
         lst[ll][0] -= 1
         if lst[ll][0] < 0:
             lst[ll][0] = 0
-    print("[master][ping_to_cloud][unassignner]",lst)
+    print("[master][ping_to_cloud][unassignner] ",listOf,":",cam,lst)
     return lst
     
     
@@ -158,13 +158,12 @@ def ping_to_cloud(url):
                         ip_cam_db_first = ip_cam_db[0]
                         if ip_config["services"] != ip_cam_db_first.services:
                             
-                            
                         ################################################################################################
                         # unassign nodes,worker and stop camera
                         
-                            workers = unassignner(ip_cam_db_first.worker,workers)
+                            workers = unassignner(ip_cam_db_first.worker,workers,"worker")
                             for serv,nd in zip(ip_cam_db_first.services,ip_cam_db_first.nodes):
-                                nodes_dict[serv] = unassignner(nd,nodes_dict[serv])
+                                nodes_dict[serv] = unassignner(nd,nodes_dict[serv],"nodes")
                             worker = ip_cam_db_first.worker
                             requests.post(worker +"/stopworker", json = ip_config)
                             
@@ -199,8 +198,6 @@ def ping_to_cloud(url):
                         
                     allIpsOnline.append(str(ip_config["ip_cam"]))
                         
-            
-            
             # Delete ipcamera
             allIpsLocal = IpConfig.query.all()
             for ip_camera in allIpsLocal:
@@ -211,7 +208,10 @@ def ping_to_cloud(url):
                     db_session.delete(ip_camera)
                     db_session.commit()
                     print("[master][ping_to_cloud]",ip_camera.camera_ip,"ip camera deleted from local database")
-                    workers = unassignner(ip_camera.worker,workers) 
+                    workers = unassignner(ip_camera.worker,workers,"worker") 
+                    for serv,nd in zip(ip_camera.services,ip_camera.nodes):
+                        nodes_dict[serv] = unassignner(nd,nodes_dict[serv],"nodes")
+                    
             print("-"*40)
         except Exception as e:
             print("-"*40)
