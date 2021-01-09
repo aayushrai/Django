@@ -11,48 +11,52 @@ import datetime
 
 
 ########################################################################################################################################################
-
-# worker assignment logic
+# assign and keep workers or nodes
 
 workers = [[0,"http://127.0.0.1:5000"],[0,"http://127.0.0.1:5001"]]
+nodes_dict = {
+    "face_recog": [[0,"http://127.0.0.1:6000/"],[0,"http://127.0.0.1:6001/"]],
+    "mask_recog": [[0,"http://127.0.0.1:6002/"]]
+}
 
-def worker_assignner(workers):
-    print("assign"*50)
-    # global workers
-    print(workers)
-    workers  = sorted(workers,key=lambda x:x[0])
-    print(workers)
-    workers[0][0] = workers[0][0] + 1
-    print(workers)
-    return workers[0][1],workers
+def assignner(lst,listOf):
+    if len(lst) == 0:
+        print("[master][ping_to_cloud][assignner] No {} available for assignment please provide {}".format(listof,listOf))
+
+    lst  = sorted(lst,key=lambda x:x[0])
+    lst[0][0] = lst[0][0] + 1
+    print("[master][ping_to_cloud][assignner]",listOf,":",lst)
+    return lst[0][1],lst
 
 
-def worker_unassignner(cam,workers):
+def unassignner(cam,lst):
     ll = -1
-    print("delete"*50)
-    for i in range(len(workers)):
-        print(workers[i][1],cam)
-        if workers[i][1] == cam:
+    for i in range(len(lst)):
+        if lst[i][1] == cam:
             ll = i
             break
     if ll == -1:
-        print("not found")
+        print("[master][ping_to_cloud][unassignner] May camera not assign to any worker")
     else:
-        workers[ll][0] -= 1
-        if workers[ll][0] < 0:
-            workers[ll][0] = 0
-    print(workers)
-    return workers
+        lst[ll][0] -= 1
+        if lst[ll][0] < 0:
+            lst[ll][0] = 0
+    print("[master][ping_to_cloud][unassignner]",lst)
+    return lst
     
     
     
-###########################################################################################################################################################   
+########################################################################################################################################################### 
+
+
+
+
 
 onlineDB = "http://127.0.0.1:7000/onlinedb"
 cloudFun = "http://127.0.0.1:7000/cloudfun"
 
-ip_cam2 = "http://192.168.252.2:8080/video"
-ip_cam = 0
+# ip_cam2 = "http://192.168.252.2:8080/video"
+# ip_cam = 0
 # # x = requests.post(url, data = {"ip_cam":ip_cam1})
 # a = requests.post(workers[0]+"/startworker", json = {"ip_cam":ip_cam,"services":["face_recog"]})
 # b = requests.post(workers[1]+"/startworker", json = {"ip_cam":ip_cam2,"services":["face_recog","mask_recog"]})
@@ -81,7 +85,7 @@ def sync_database_online(url):
                 requests.post(url,data=data)
             
             print("-"*40)
-            print("Data is sent for sycning online Database with local database")
+            print("[master][sync_database_online] Data is sent for sycning online Database with local database")
             print("-"*40)
             
             newTime = datetime.datetime.now()
@@ -97,65 +101,122 @@ def sync_database_online(url):
                 
         except Exception as e:
             print("-"*40)
-            print(e)
-            print("Not able to update online database, may be system not connect to internet or any other issue in sync_database_online function")
+            print("[master][sync_database_online]",e)
+            print("[master][sync_database_online] Not able to update online database, may be system not connect to internet or any other issue in sync_database_online function")
             print("-"*40)
         finally:
             time.sleep(60)
 
 def ping_to_cloud(url):
-    global workers
+    global workers,nodes_dict
     while True:
         try:
             print("-"*40)
-            print("Retreving data from cloud function")
+            
+            print("[master][ping_to_cloud] Retreving data from cloud function")
             res = requests.get(url)
             ip_configs = res.json()
             allIpsOnline = []
+            
             for ip_config in ip_configs:
                 if ip_config:
                     ip_cam_db = IpConfig.query.filter(IpConfig.camera_ip == ip_config["ip_cam"]).all()
-                    print(workers,ip_config)
+                    
+                    # Create new ipcamera 
                     if len(ip_cam_db)==0:
-                        worker,workers = worker_assignner(workers)
-                        newip = IpConfig(camera_ip=str(ip_config["ip_cam"]),services=ip_config["services"],worker=worker)
+                        
+                        #############################################################################################
+                        # worker assign and node assign
+                        worker,workers = assignner(workers,"worker")
+                    
+                        ip_config_new = ip_config.copy()
+                        nodesForServices = []
+                        for serv in ip_config["services"]:
+                            node,nodes_dict[serv] = assignner(nodes_dict[serv],"node")
+                            nodesForServices.append(node)
+                        new = {"nodes":nodesForServices}
+                        ip_config_new.update(new)
+                        
+                        ###############################################################################################
+                        # save in database
+                        
+                        newip = IpConfig(camera_ip=str(ip_config["ip_cam"]),services=ip_config["services"],worker=worker,nodes=nodesForServices)
                         db_session.add(newip)
                         db_session.commit() 
-                        requests.post(worker +"/startworker", json = ip_config)
-                        print("ip config:",ip_config,"assigned to worker:",worker)
+                        
+                        ###############################################################################################
+                        # request to create worker
+                        
+                        requests.post(worker +"/startworker", json = ip_config_new)
+                        print("[master][ping_to_cloud] ip config:",ip_config_new,"assigned to worker:",worker)
+                        
+                        ################################################################################################
+                    
+                     # Update ipcamera 
                     elif len(ip_cam_db)==1:
+                        
                         ip_cam_db_first = ip_cam_db[0]
                         if ip_config["services"] != ip_cam_db_first.services:
-                            ip_cam_db_first.services = ip_config["services"]
-                            db_session.commit()
-                            workers = worker_unassignner(ip_cam_db_first.worker,workers)
+                            
+                            
+                        ################################################################################################
+                        # unassign nodes,worker and stop camera
+                        
+                            workers = unassignner(ip_cam_db_first.worker,workers)
+                            for serv,nd in zip(ip_cam_db_first.services,ip_cam_db_first.nodes):
+                                nodes_dict[serv] = unassignner(nd,nodes_dict[serv])
                             worker = ip_cam_db_first.worker
                             requests.post(worker +"/stopworker", json = ip_config)
-                            worker,workers = worker_assignner(workers)
-                            requests.post(worker +"/startworker", json = ip_config)
-                            print("IpConfig updated for camera:",ip_cam_db_first)
-                    else:
-                        print("may be two or more same ip in ipconfig table error from ping_Cloud function!!")
+                            
+                        ##################################################################################################
+                        # worker assign and node assign
+                        
+                            worker,workers = assignner(workers,"worker")
+                            ip_config_new = ip_config.copy()
+                            nodesForServices = []
+                            for serv in ip_config["services"]:
+                                node,nodes_dict[serv] = assignner(nodes_dict[serv],"node")
+                                nodesForServices.append(node)
+                            new = {"nodes":nodesForServices}
+                            ip_config_new.update(new)
+                            
+                        ####################################################################################################
+                        # save in database
+                            ip_cam_db_first.services = ip_config["services"]
+                            ip_cam_db_first.nodes = nodesForServices
+                            ip_cam_db_first.worker = worker 
+                            db_session.commit()
+                            
+                        ####################################################################################################
+                        # request to create new worker
+                        
+                            requests.post(worker +"/startworker", json = ip_config_new)
+                            print("[master][ping_to_cloud] Any service is updated in camera:",ip_cam_db_first)
+                        ####################################################################################################
+                        
+                    else: 
+                        print("[master][ping_to_cloud] May be two or more same ip in ipconfig table(database), Please remove same ip if present")
                         
                     allIpsOnline.append(str(ip_config["ip_cam"]))
                         
             
-            print("-"*40)
+            
+            # Delete ipcamera
             allIpsLocal = IpConfig.query.all()
             for ip_camera in allIpsLocal:
                 if ip_camera.camera_ip not in allIpsOnline:
                     json_data = {"ip_cam":ip_camera.camera_ip,"services":ip_camera.services}
                     requests.post(ip_camera.worker +"/stopworker", json = json_data)
-                    print(ip_camera.camera_ip,"ip camera stopped and deleted")
+                    print("[master][ping_to_cloud]",ip_camera.camera_ip,"ip camera stopped and deleted")
                     db_session.delete(ip_camera)
                     db_session.commit()
-                    print(ip_camera.camera_ip,"ip camera deleted from local database")
-                    workers = worker_unassignner(ip_camera.worker,workers) 
-                    
+                    print("[master][ping_to_cloud]",ip_camera.camera_ip,"ip camera deleted from local database")
+                    workers = unassignner(ip_camera.worker,workers) 
+            print("-"*40)
         except Exception as e:
             print("-"*40)
             print(e)
-            print("Not able to update online database, may be system not connect to internet or any other issue in ping_to_cloud function")
+            print("[master][ping_to_cloud] Not able to update online database, may be system not connect to internet or any other issue in ping_to_cloud function")
             print("-"*40)
         finally:
             time.sleep(20)
@@ -178,13 +239,13 @@ def index():
     c = CameraInfo(camera_name=camera_name,face=face,timestamp=timestamp,service=service)
     db_session.add(c)
     db_session.commit()
-    print(camera_name,face,timestamp,service)
+    print("[master][index]",camera_name,face,timestamp,service)
     return "Local database is updated"
 
 @app.route('/deleteallcamerainfo')
 def deleteAllCameraInfo():
     logs = CameraInfo.query.all()
-    print("Deleting All CameraInfo")
+    print("[master][deleteAllCameraInfo] Deleting All CameraInfo")
     for l in logs:
         db_session.delete(l)
     db_session.commit()
@@ -192,7 +253,7 @@ def deleteAllCameraInfo():
 
 @app.route('/deleteallipconfig')
 def deleteAllIpConfig():
-    print("Deleting All IpConfig")
+    print("[master][deleteAllIpConfig] Deleting All IpConfig")
     logs = IpConfig.query.all()
     for l in logs:
         db_session.delete(l)

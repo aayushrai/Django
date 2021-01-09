@@ -39,10 +39,13 @@ class IpConfig(Base):
     camera_ip = Column(String(256))
     services = Column(PickleType)
     worker = Column(String(256))
-    def __init__(self,camera_ip,services,worker):
+    nodes = Column(PickleType)
+    
+    def __init__(self,camera_ip,services,worker,nodes):
         self.camera_ip = camera_ip
         self.services = services
         self.worker = worker
+        self.nodes = nodes
     
     def __repr__(self):
         return str(self.camera_ip)

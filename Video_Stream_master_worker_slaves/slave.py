@@ -115,7 +115,10 @@ class FaceRecog:
     def get_frame(self,frame,camera_name,timestamp,service):
         if frame.shape:
             starttime = time.time()
-            self.face_recog(frame,camera_name,timestamp,starttime,service)
+            if service == "face_recog":
+                self.face_recog(frame,camera_name,timestamp,starttime,service)
+            elif service == "mask_recog":
+                print("mask recog running in camera:",camera_name)
             
 
 face_r = FaceRecog()
@@ -135,4 +138,4 @@ def home():
     return 'Success!'
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,port="7000",threaded=True)
+    app.run(host='127.0.0.1', debug=True,port="6000",threaded=True)

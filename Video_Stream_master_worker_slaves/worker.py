@@ -42,22 +42,20 @@ def create_request_to_slave(url,jpg_as_text,camera_name,timeout,timestamp,servic
         print("-"*50)
         
 # @app.before_first_request
-def face_recog_thread(camera,camera_name,service,node):
+def face_recog_thread(camera,camera_name,services,node_service):
     print(camera)
-    global counter
     while camera[0]:
         frame = camera[1].get_frame()
         timestamp = datetime.datetime.now()
         if frame.shape:
             retval, buffer = cv2.imencode('.jpg', frame)
-            jpg_as_text = base64.b64encode(buffer)
-            create_request_to_slave(node,jpg_as_text,camera_name,1,timestamp,service)   
+            jpg_as_text = base64.b64encode(buffer) 
+            for index,service in enumerate(services):
+                create_request_to_slave(node_service[index],jpg_as_text,camera_name,1,timestamp,service) 
 
 
-nodes_dict = {
-    "face_recog": ["http://127.0.0.1:6000/","http://127.0.0.1:6001/"],
-    "other": []
-}
+
+
 
 @app.route('/startworker',methods=['GET', 'POST'])
 def start():
@@ -67,6 +65,7 @@ def start():
         ip_config = request.get_json()
         url = ip_config["ip_cam"]
         services = ip_config["services"]
+        node_service = ip_config["nodes"]
         print("post-->",url)
         if url == "0":
             url = 0
@@ -79,17 +78,11 @@ def start():
                 del camera_obj_dis[url]
         if flag:
             camera_obj_dis[url] = [False,VideoCamera(url)]
-            for service in services:
-                print("-"*50)
-                if service == "face_recog":
-                    node = nodes_dict[service][0]
-                    thread = threading.Thread(target=face_recog_thread,args=[camera_obj_dis[url],url,service,node])
-                    camera_obj_dis[url][0] = True
-                    thread.start()
-                    print("Face recongnition service is started")
-                else:
-                    print(service," service not available")
-                print("-"*50)
+            thread = threading.Thread(target=face_recog_thread,args=[camera_obj_dis[url],url,services,node_service])
+            camera_obj_dis[url][0] = True
+            thread.start()
+            
+                
                 
     return "started"
 
@@ -100,6 +93,7 @@ def stop():
         ip_config = request.get_json()
         url = ip_config["ip_cam"]
         services = ip_config["services"]
+        
         if url == "0":
             url = 0
         if url in camera_obj_dis:
