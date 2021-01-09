@@ -16,19 +16,18 @@ import datetime
 
 workers = [[0,"http://127.0.0.1:5000"],[0,"http://127.0.0.1:5001"]]
 
-def worker_assignner():
+def worker_assignner(workers):
     print("assign"*50)
-    global workers
+    # global workers
     print(workers)
     workers  = sorted(workers,key=lambda x:x[0])
     print(workers)
     workers[0][0] = workers[0][0] + 1
     print(workers)
-    return workers[0][1]
+    return workers[0][1],workers
 
 
-def worker_unassignner(cam):
-    global workers
+def worker_unassignner(cam,workers):
     ll = -1
     print("delete"*50)
     for i in range(len(workers)):
@@ -43,6 +42,7 @@ def worker_unassignner(cam):
         if workers[ll][0] < 0:
             workers[ll][0] = 0
     print(workers)
+    return workers
     
     
     
@@ -111,11 +111,13 @@ def ping_to_cloud(url):
             print("Retreving data from cloud function")
             res = requests.get(url)
             ip_configs = res.json()
+            allIpsOnline = []
             for ip_config in ip_configs:
                 if ip_config:
                     ip_cam_db = IpConfig.query.filter(IpConfig.camera_ip == ip_config["ip_cam"]).all()
+                    print(workers,ip_config)
                     if len(ip_cam_db)==0:
-                        worker = worker_assignner()
+                        worker,workers = worker_assignner(workers)
                         newip = IpConfig(camera_ip=str(ip_config["ip_cam"]),services=ip_config["services"],worker=worker)
                         db_session.add(newip)
                         db_session.commit() 
@@ -126,38 +128,37 @@ def ping_to_cloud(url):
                         if ip_config["services"] != ip_cam_db_first.services:
                             ip_cam_db_first.services = ip_config["services"]
                             db_session.commit()
-                            worker_unassignner(ip_cam_db_first.worker)
+                            workers = worker_unassignner(ip_cam_db_first.worker,workers)
                             worker = ip_cam_db_first.worker
                             requests.post(worker +"/stopworker", json = ip_config)
-                            worker = worker_assignner()
+                            worker,workers = worker_assignner(workers)
                             requests.post(worker +"/startworker", json = ip_config)
                             print("IpConfig updated for camera:",ip_cam_db_first)
                     else:
-                        print("two or more same ip in ipconfig table")
+                        print("may be two or more same ip in ipconfig table error from ping_Cloud function!!")
                         
+                    allIpsOnline.append(str(ip_config["ip_cam"]))
                         
-                        
-                    
-                    # 
+            
             print("-"*40)
-         
-            # if not lastupdate:
-            #     l = logger(lastupdate=newTime)
-            #     db_session.add(l)
-            #     db_session.commit()
-            # else:
-            #     l = logger.query.all()[0]
-            #     l.lastupdate = newTime
-            #     db_session.add(l)
-            #     db_session.commit()
-                
+            allIpsLocal = IpConfig.query.all()
+            for ip_camera in allIpsLocal:
+                if ip_camera.camera_ip not in allIpsOnline:
+                    json_data = {"ip_cam":ip_camera.camera_ip,"services":ip_camera.services}
+                    requests.post(ip_camera.worker +"/stopworker", json = json_data)
+                    print(ip_camera.camera_ip,"ip camera stopped and deleted")
+                    db_session.delete(ip_camera)
+                    db_session.commit()
+                    print(ip_camera.camera_ip,"ip camera deleted from local database")
+                    workers = worker_unassignner(ip_camera.worker,workers) 
+                    
         except Exception as e:
             print("-"*40)
             print(e)
             print("Not able to update online database, may be system not connect to internet or any other issue in ping_to_cloud function")
             print("-"*40)
         finally:
-            time.sleep(10)
+            time.sleep(20)
             
             
 
@@ -205,5 +206,5 @@ def shutdown_session(exception=None):
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1",debug=True,port=7001,threaded=True)
+    app.run(host="127.0.0.1",debug=False,port=7001,threaded=True)
     

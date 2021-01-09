@@ -105,7 +105,7 @@ def stop():
         if url in camera_obj_dis:
             camera_obj_dis[url][1].stop()
             camera_obj_dis[url][0] = False
-            print("camera :",url," Stopped")
+            print("camera :",url," Stopped and deleted")
             del camera_obj_dis[url] 
         else:
             print("camera: {} you trying to stop is not in camera_obj_dis".format(url))
