@@ -26,6 +26,7 @@ class FaceRecog:
         self.qSize = 8
         self.faceRecogQ = deque(maxlen=self.qSize)
         self.counter = 0
+        self.mask_count = 0
         if not load_encodings:
             FaceRecog.update_encoding()
             load_encodings=True
@@ -35,7 +36,7 @@ class FaceRecog:
         global known_names,known_faces,face_cascade
         known_names=[]
         known_faces=[]
-        print("Loading Encoding")
+        print("[slave][update_encoding] Loading Encoding")
         base = os.path.join(os.getcwd(),"Faces")
         for folder in os.listdir(base):
             for img_name in os.listdir(os.path.join(base,folder)):
@@ -52,7 +53,7 @@ class FaceRecog:
                     known_faces.append(encoding)
                     known_names.append(folder)
                 else:
-                    print(folder,img_name,": Face not found in image" )
+                    print("[slave][update_encoding] ",folder,img_name,": Face not found in image" )
     
     def face_detection(self,image):
         rects = []
@@ -72,7 +73,6 @@ class FaceRecog:
         #locations = face_recognition.face_locations(image2, number_of_times_to_upsample=3,model="hog")
         rects = self.face_detection(image2)
         encodings = face_recognition.face_encodings(image2, rects)
-        
         for face_encoding, face_location in zip(encodings, rects):
             (startY,endX,endY,startX) = face_location
             crop_image=image2[startY-40:endY+40,startX-40:endX+40,:]
@@ -82,26 +82,29 @@ class FaceRecog:
                 if len(face_rect)==1:
                     results = face_recognition.compare_faces(known_faces, face_encoding,tolerance=0.6)
                     distance = face_recognition.face_distance(known_faces,face_encoding)
+                    print("-"*40)
                     if True in results:
                         match = known_names[results.index(True)]
-                        print(f"Match Found:", {match}," in camera::",camera_name , " and time taken by face recog is ",time.time() - starttime)
+                        print(f"[slave][face_recog] Match Found:", {match}," in camera::",camera_name , " and time taken by face recog is ",time.time() - starttime)
                     else:
                         match = "Unknown"
-                        print("Unknown found in camera::",camera_name ," and time taken by face recog is ",time.time() - starttime)
-                        
+                        print("[slave][face_recog] Unknown found in camera::",camera_name ," and time taken by face recog is ",time.time() - starttime)
+                    print("-"*40)
                     self.faceRecogQ.append(match)
                     url = "http://127.0.0.1:7001/data"
                     
                     if self.counter%self.qSize==0:
                         flag,name = self.checkFaceRecogQ()
+                        
                         if flag:
                             data = {"camera":camera_name,"face":name,"timestamp":timestamp,"service":service}
                             requests.post(url,data=data)
-                            print("-"*40)
-                            print("Sent to master for database update")
-                            print("-"*40)
+                            print("[slave][face_recog] Sent to master for database update")
+                            
                         self.counter = 0
                     self.counter += 1
+                    
+        
                     
                     
     
@@ -118,8 +121,11 @@ class FaceRecog:
             if service == "face_recog":
                 self.face_recog(frame,camera_name,timestamp,starttime,service)
             elif service == "mask_recog":
-                print("mask recog running in camera:",camera_name)
-            
+                if self.mask_count%100 == 0:
+                    print("[slave][get_frame] mask recog running in camera:",camera_name)
+                    self.mask_count = 0
+                self.mask_count += 1
+        
 
 face_r = FaceRecog()
 

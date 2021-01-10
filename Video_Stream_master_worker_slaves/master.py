@@ -221,13 +221,36 @@ def ping_to_cloud(url):
         finally:
             time.sleep(20)
             
-   
+
+allIpsLocal = IpConfig.query.all()
+print("[master] Starting workers and nodes present in local database!!")
+for ip_camera in allIpsLocal:
+    worker,workers = assignner(workers,"worker")
+    ip_config_new = {"ip_cam":ip_camera.camera_ip,"services":ip_camera.services}
+    nodesForServices = []
+    for serv in ip_camera.services:
+        node,nodes_dict[serv] = assignner(nodes_dict[serv],"node")
+        nodesForServices.append(node)
+    new = {"nodes":nodesForServices}
+    ip_config_new.update(new)
+    
+    ip_camera.nodes = nodesForServices
+    ip_camera.worker = worker 
+    db_session.commit()
+    
+    requests.post(worker +"/startworker", json = ip_config_new)
+    print("[master][ping_to_cloud] ip config:",ip_config_new,"assigned to worker:",worker)
+
+                            
+
 
 t1 = threading.Thread(target=sync_database_online,args=[onlineDB])
+print("[master] Starting syncing of local database to online database!!")
 t1.start()    
 t2 = threading.Thread(target=ping_to_cloud,args=[cloudFun])
+print("[master] Starting syncing of online database to local database!!")
 t2.start()    
-previous_recognised_face = ""
+
 @app.route('/data', methods=["POST"])
 def index():
     global onlineDB
