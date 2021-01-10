@@ -221,7 +221,7 @@ def ping_to_cloud(url):
         finally:
             time.sleep(20)
             
-            
+   
 
 t1 = threading.Thread(target=sync_database_online,args=[onlineDB])
 t1.start()    
