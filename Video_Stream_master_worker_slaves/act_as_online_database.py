@@ -14,7 +14,7 @@ def onlineDB():
     return "connected"
 
 
-ip_config = [{"ip_cam":0,"services":["face_recog","mask_recog"]},{"ip_cam":"http://192.168.252.2:8080/video","services":["face_recog","mask_recog"]}]
+ip_config = [{"ip_cam":0,"services":["face_recog","mask_recog"]},{"ip_cam":"http://192.168.43.173:8080/video","services":["face_recog","mask_recog"]}]
 
 @app.route("/cloudfun",methods=["POST","GET"])
 def cloudFun():
