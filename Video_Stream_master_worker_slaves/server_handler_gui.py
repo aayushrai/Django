@@ -46,12 +46,19 @@ class StartPage(tk.Frame):
         cam_frame = tk.Frame(self)
         self.lbl = tk.Label(cam_frame, text="Click to start all flask servers!!!!!")
         self.lbl.pack(pady=50, padx=10)
-        btn = tk.Button(cam_frame, text="Click Me",command=self.clicked)
+        btn = tk.Button(cam_frame, text="Click Me",command=lambda:[controller.show_frame(Details),self.clicked()])
         btn.pack(side="left",padx=10)
         cam_frame.pack(side="left")
         
-    def clicked(self):
+    def shellScript(self):
         subprocess.call('bash runner.sh',shell=True)
+        
+    def clicked(self):
+        # subprocess.call('bash runner.sh',shell=True)
+        t = threading.Thread(target = self.shellScript)
+        t.start()
+        
+        self.lbl.config(text="Running flask server")
         # os.system("sh runner.sh")
         
 
