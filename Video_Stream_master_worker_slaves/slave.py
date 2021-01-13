@@ -12,6 +12,7 @@ import datetime
 import requests
 import threading
 from collections import deque
+import pickle
 
 app = Flask(__name__)
 
@@ -33,27 +34,46 @@ class FaceRecog:
     
     @staticmethod
     def update_encoding():
-        global known_names,known_faces,face_cascade
-        known_names=[]
-        known_faces=[]
-        print("[slave][update_encoding] Loading Encoding")
-        base = os.path.join(os.getcwd(),"Faces")
-        for folder in os.listdir(base):
-            for img_name in os.listdir(os.path.join(base,folder)):
-                print(os.path.join(base,folder,img_name))
-                image = face_recognition.load_image_file(os.path.join(base,folder,img_name))
-                location = []
-                faces = face_cascade.detectMultiScale(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), 1.05, 5)
-                for (x,y,w,h) in faces:
-                    (startX, startY, endX, endY) = x,y,x+w,y+h
-                    if (startX + 5 < endX) and (startY + 5 < endY): 
-                            location.append((startY,endX,endY,startX))
-                if len(location)>0:
-                    encoding = face_recognition.face_encodings(image, known_face_locations=location)[0]
-                    known_faces.append(encoding)
-                    known_names.append(folder)
-                else:
-                    print("[slave][update_encoding] ",folder,img_name,": Face not found in image" )
+        global known_names,known_faces
+        encoding_and_names = pickle.load(open("encoding.txt","rb"))
+        new_known_faces = encoding_and_names["known_encoding"]
+        new_known_names = encoding_and_names["known_name"]
+        
+        ######################################################################################################################
+        # If any new encoding in encoding.txt it gets updated
+        
+        for i in range(len(new_known_faces)):
+            flag = True
+            for k in range(len(known_faces)):
+                if np.array_equal(new_known_faces[i],known_faces[k]): 
+                    flag = False
+                    break
+            if flag:
+                known_faces.append(new_known_faces[i])
+                known_names.append(new_known_names[i])
+                print("[slave][update_encoding] Found New Encoding Name",new_known_names[i])
+        
+        #######################################################################################################################
+        # If any encoding is deleted in encoding.txt it gets updated
+        
+        removes_index = []
+        for j in range(len(known_faces)):
+            flag2 = True
+            for l in range(len(new_known_faces)):
+                if np.array_equal(new_known_faces[l],known_faces[j]):
+                    flag2 = False
+                    break
+            if flag2:
+                removes_index.append(j)
+        remove_count = 0
+        for r in removes_index:
+            known_faces.pop(r-remove_count)
+            print("[slave][update_encoding]",known_names[r-remove_count],"Encoding is Removed")
+            known_names.pop(r-remove_count)
+            remove_count += 1
+        
+        #########################################################################################################################
+            
     
     def face_detection(self,image):
         rects = []
@@ -142,6 +162,13 @@ def home():
     # t1.start()
     face_r.get_frame(image_buffer,camera_name,timestamp,service)
     return 'Success!'
+
+@app.route("/retrain")
+def retrain():
+    t = threading.Thread(face_r.update_encoding())
+    t.start()
+    return 'Success!'
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', debug=True,port="6000",threaded=True)

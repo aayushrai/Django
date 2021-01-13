@@ -2,6 +2,8 @@ import os
 import sys
 import tkinter as tk
 import numpy as np
+import threading
+import subprocess
 LARGE_FONT = ("Verdana", 12)
 
 
@@ -42,17 +44,16 @@ class StartPage(tk.Frame):
         label.pack(pady=50, padx=10)
 
         cam_frame = tk.Frame(self)
-        lbl = tk.Label(cam_frame, text="Click to start all flask servers!!!!!")
-        lbl.pack(pady=50, padx=10)
-        btn = tk.Button(cam_frame, text="Click Me",command=lambda: controller.show_frame(Details))
+        self.lbl = tk.Label(cam_frame, text="Click to start all flask servers!!!!!")
+        self.lbl.pack(pady=50, padx=10)
+        btn = tk.Button(cam_frame, text="Click Me",command=self.clicked)
         btn.pack(side="left",padx=10)
         cam_frame.pack(side="left")
         
-    # def clicked(self):
-    #     # if not click:
-    #     lbl.configure(text="Starting Server*******")
-    #     os.system("sh runner.sh")
-    #     lbl.configure(text="Server Started********")
+    def clicked(self):
+        subprocess.call('bash runner.sh',shell=True)
+        # os.system("sh runner.sh")
+        
 
 class Details(tk.Frame):
 

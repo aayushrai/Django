@@ -8,7 +8,9 @@ from models import CameraInfo,logger,IpConfig
 import time
 import threading
 import datetime
-
+import pickle
+import face_recognition
+import os
 
 ########################################################################################################################################################
 # assign and keep workers or nodes
@@ -106,6 +108,8 @@ def sync_database_online(url):
             print("-"*40)
         finally:
             time.sleep(60)
+            
+########################################################################################################################
 
 def ping_to_cloud(url):
     global workers,nodes_dict
@@ -221,6 +225,40 @@ def ping_to_cloud(url):
         finally:
             time.sleep(20)
             
+########################################################################################################################3
+# Face recognition encoding loading and update
+
+face_cascade = cv2.CascadeClassifier(os.getcwd() + '/haarcascade_frontalface_default.xml')
+
+def update_encoding():
+    global known_names,known_faces,face_cascade
+    known_names=[]
+    known_faces=[]
+    print("[master][update_encoding] Loading Encoding")
+    base = os.path.join(os.getcwd(),"Faces")
+    for folder in os.listdir(base):
+        for img_name in os.listdir(os.path.join(base,folder)):
+            print(os.path.join(base,folder,img_name))
+            image = face_recognition.load_image_file(os.path.join(base,folder,img_name))
+            location = []
+            faces = face_cascade.detectMultiScale(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), 1.05, 5)
+            for (x,y,w,h) in faces:
+                (startX, startY, endX, endY) = x,y,x+w,y+h
+                if (startX + 5 < endX) and (startY + 5 < endY): 
+                        location.append((startY,endX,endY,startX))
+            if len(location)>0:
+                encoding = face_recognition.face_encodings(image, known_face_locations=location)[0]
+                known_faces.append(encoding)
+                known_names.append(folder)
+            else:
+                print(folder,img_name,": Face not found in image" )
+    with open("encoding.txt","wb") as file:
+        pickle.dump({"known_encoding":known_faces,"known_name":known_names},file)
+        
+update_encoding()
+
+########################################################################################################################3
+#Starting workers and nodes present in local database
 
 allIpsLocal = IpConfig.query.all()
 print("[master] Starting workers and nodes present in local database!!")
@@ -241,8 +279,9 @@ for ip_camera in allIpsLocal:
     requests.post(worker +"/startworker", json = ip_config_new)
     print("[master][ping_to_cloud] ip config:",ip_config_new,"assigned to worker:",worker)
 
-                            
 
+########################################################################################################################
+# Starting threads for syncing
 
 t1 = threading.Thread(target=sync_database_online,args=[onlineDB])
 print("[master] Starting syncing of local database to online database!!")
@@ -250,6 +289,8 @@ t1.start()
 t2 = threading.Thread(target=ping_to_cloud,args=[cloudFun])
 print("[master] Starting syncing of online database to local database!!")
 t2.start()    
+
+########################################################################################################################3
 
 @app.route('/data', methods=["POST"])
 def index():
@@ -282,6 +323,14 @@ def deleteAllIpConfig():
         db_session.delete(l)
     db_session.commit()
     return "All records of ip config deleted succesfully"
+
+@app.route('/updateencoding')
+def retrian():
+    update_encoding()
+    for face_recog_node in nodes_dict["face_recog"]:
+        print(face_recog_node)
+        requests.get(face_recog_node[1]+"/retrain")
+    return "Update encoding succeful"
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
