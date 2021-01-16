@@ -8,6 +8,9 @@ import time
 import os
 import requests
 import datetime
+
+# print("virtual env: ",os.environ['VIRTUAL_ENV'])
+
 app = Flask(__name__)
 
 

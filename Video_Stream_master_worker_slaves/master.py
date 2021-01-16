@@ -12,6 +12,8 @@ import pickle
 import face_recognition
 import os
 
+# print("virtual env: ",os.environ['VIRTUAL_ENV'])
+
 ########################################################################################################################################################
 # assign and keep workers or nodes
 

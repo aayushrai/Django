@@ -14,6 +14,8 @@ import threading
 from collections import deque
 import pickle
 
+print("virtual env: ",os.environ['VIRTUAL_ENV'])
+
 app = Flask(__name__)
 
 load_encodings = False

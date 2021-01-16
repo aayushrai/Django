@@ -1,4 +1,7 @@
 from flask import Flask,request,jsonify
+import os
+# print("virtual env: ",os.environ['VIRTUAL_ENV'])
+
 app = Flask(__name__)
 
 
